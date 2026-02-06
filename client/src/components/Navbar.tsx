@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import { Link, useLocation } from "wouter";
 import { Menu, X, Code2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -7,7 +6,6 @@ import { cn } from "@/lib/utils";
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [location] = useLocation();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -25,7 +23,10 @@ export default function Navbar() {
     { name: "Contato", href: "#contact" },
   ];
 
-  const scrollToSection = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+  const scrollToSection = (
+    e: React.MouseEvent<HTMLAnchorElement>,
+    href: string
+  ) => {
     e.preventDefault();
     const element = document.querySelector(href);
     if (element) {
@@ -38,12 +39,15 @@ export default function Navbar() {
     <nav
       className={cn(
         "fixed top-0 left-0 right-0 z-50 transition-all duration-300 border-b border-transparent",
-        isScrolled ? "bg-black/80 backdrop-blur-md border-primary/20 py-4" : "bg-transparent py-6"
+        isScrolled
+          ? "bg-black/80 backdrop-blur-md border-primary/20 py-4"
+          : "bg-transparent py-6"
       )}
     >
       <div className="container flex items-center justify-between">
-        <a 
-          href="#home" 
+        {/* Logo */}
+        <a
+          href="#home"
           onClick={(e) => scrollToSection(e, "#home")}
           className="flex items-center gap-2 group"
         >
@@ -68,12 +72,21 @@ export default function Navbar() {
               <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full" />
             </a>
           ))}
-          <Button 
-            variant="outline" 
-            className="border-primary/50 text-primary hover:bg-primary hover:text-black transition-all duration-300 hover:shadow-[0_0_20px_var(--color-primary)]"
+
+          {/* Botão Baixar CV */}
+          <a
+            href="/Curriculo-PedroResende.pdf"
+            download
+            target="_blank"
+            rel="noopener noreferrer"
           >
-            Baixar CV
-          </Button>
+            <Button
+              variant="outline"
+              className="border-primary/50 text-primary hover:bg-primary hover:text-black transition-all duration-300 hover:shadow-[0_0_20px_var(--color-primary)]"
+            >
+              Baixar CV
+            </Button>
+          </a>
         </div>
 
         {/* Mobile Menu Toggle */}
@@ -85,11 +98,13 @@ export default function Navbar() {
         </button>
       </div>
 
-      {/* Mobile Menu Overlay */}
+      {/* Mobile Menu */}
       <div
         className={cn(
           "fixed inset-0 bg-black/95 backdrop-blur-xl z-40 flex flex-col items-center justify-center gap-8 transition-all duration-500 md:hidden",
-          isMobileMenuOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
+          isMobileMenuOpen
+            ? "opacity-100 pointer-events-auto"
+            : "opacity-0 pointer-events-none"
         )}
       >
         {navLinks.map((link) => (
@@ -102,12 +117,21 @@ export default function Navbar() {
             {link.name}
           </a>
         ))}
-        <Button 
-          size="lg"
-          className="mt-4 bg-primary text-black hover:bg-primary/90 shadow-[0_0_20px_var(--color-primary)]"
+
+        {/* Botão Baixar CV (Mobile) */}
+        <a
+          href="/Curriculo-PedroResende.pdf"
+          download
+          target="_blank"
+          rel="noopener noreferrer"
         >
-          Baixar CV
-        </Button>
+          <Button
+            size="lg"
+            className="mt-4 bg-primary text-black hover:bg-primary/90 shadow-[0_0_20px_var(--color-primary)]"
+          >
+            Baixar CV
+          </Button>
+        </a>
       </div>
     </nav>
   );
